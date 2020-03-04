@@ -17,12 +17,18 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
     boolean isStart = false;//游戏是否开始
 
-    Timer timer = new Timer(100,this);//定时器
+    Timer timer = new Timer(150,this);//定时器
 
     //定义一个食物
     int foodX;
     int foodY;
     Random random = new Random();//随机数
+
+    //死亡判断
+    boolean isFail = false;
+
+    //积分系统
+    int score;
 
     //构造器 用于初始化
     public GamePanel(){
@@ -47,6 +53,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         //食物
         foodX = 25 + 25 * random.nextInt(34);
         foodY = 75 + 25 * random.nextInt(24);
+
+        score = 0;
     }
 
     //画板
@@ -78,12 +86,25 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         //画食物
         Data.food.paintIcon(this,g,foodX,foodY);
 
+        //画积分
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("微软雅黑",Font.BOLD,18));
+        g.drawString("长度:"+lenth,750,35);
+        g.drawString("分数:"+score,750,50);
         //游戏提示：是否开始
         if(isStart==false){
             //显示一个文字
             g.setColor(Color.WHITE);
             g.setFont(new Font("微软雅黑",Font.BOLD,40));
             g.drawString("按下空格开始游戏",300,300);
+        }
+
+        //失败提示
+        if(isFail){
+            //显示一个文字
+            g.setColor(Color.RED);
+            g.setFont(new Font("微软雅黑",Font.BOLD,40));
+            g.drawString("游戏失败！按下空格重新开始游戏",200,300);
         }
     }
 
@@ -94,7 +115,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         //获取按下键盘是哪个键
         int keyCode = e.getKeyCode();
         if (keyCode==KeyEvent.VK_SPACE){//如果按下的是空格键
-            isStart = !isStart;
+            if (isFail){//失败重新再来一遍
+                isFail = false;
+                init();//重新初始化游戏
+            }else {//暂停游戏
+                isStart = !isStart;
+            }
             repaint();//刷新界面
         }
         //键盘控制走向
@@ -113,7 +139,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         //如果游戏处于开始
-        if(isStart){
+        if(isStart && isFail==false){
             //右移
             for (int i = lenth-1; i > 0; i--){
                 snakeX[i] = snakeX[i-1];
@@ -139,9 +165,17 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
             //如果小蛇的头部与食物的坐标重合
             if (snakeX[0]==foodX && snakeY[0]==foodY){
                 lenth ++;//小蛇长度+1
+                score = score + 10;
                 //重新生成食物
                 foodX = 25 + 25 * random.nextInt(34);
                 foodY = 75 + 25 * random.nextInt(24);
+            }
+
+            //如果小蛇头部与身体碰撞，游戏失败
+            for (int i = 1; i<lenth;i++){
+                if (snakeX[0]==snakeX[i] && snakeY[0]==snakeY[i]){
+                    isFail = true;//失败判断
+                }
             }
             repaint();//刷新页面
         }
