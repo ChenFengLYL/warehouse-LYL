@@ -84,6 +84,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
             isStart = !isStart;
             repaint();//刷新界面
         }
+        //键盘控制走向
+        if(keyCode==KeyEvent.VK_LEFT){
+            fx = "L";
+        }else if(keyCode==KeyEvent.VK_RIGHT){
+            fx = "R";
+        }else if(keyCode==KeyEvent.VK_UP){
+            fx = "U";
+        }else if(keyCode==KeyEvent.VK_DOWN){
+            fx = "D";
+        }
     }
 
     //定时器 监听时间：帧       ||（接口实现方法）
@@ -96,10 +106,21 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
                 snakeX[i] = snakeX[i-1];
                 snakeY[i] = snakeY[i-1];
             }
-            snakeX[0] = snakeX[0] + 25;//头部
-            //边界判断
-            if(snakeX[0]>850){
-                snakeX[0]=25;
+            //通过控制方向让头部移动
+            if(fx.equals("R")){
+                snakeX[0] = snakeX[0] + 25;//头部移动
+                if(snakeX[0]>850){ snakeX[0]=25; }//边界判断
+            }else if(fx.equals("L")){
+                snakeX[0] = snakeX[0] - 25;//头部移动
+                if(snakeX[0]<25){ snakeX[0]=850; }//边界判断
+            }
+            else if(fx.equals("U")){
+                snakeY[0] = snakeY[0] - 25;//头部移动
+                if(snakeY[0]<75){ snakeY[0]=650; }//边界判断
+            }
+            else if(fx.equals("D")){
+                snakeY[0] = snakeY[0] + 25;//头部移动
+                if(snakeY[0]>650){ snakeY[0]=75; }//边界判断
             }
             repaint();//刷新页面
         }
