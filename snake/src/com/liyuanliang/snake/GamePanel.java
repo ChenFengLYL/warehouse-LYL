@@ -2,17 +2,29 @@ package com.liyuanliang.snake;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
     int lenth;//蛇的长度
     int[] snakeX = new int[600];
     int[] snakeY = new int[500];
     String fx; //蛇头方向
 
+    boolean isStart = false;//游戏是否开始
+
+    Timer timer = new Timer(100,this);//定时器
+
     //构造器 用于初始化
     public GamePanel(){
         init();
+        //获取键盘的监听事件
+        this.setFocusable(true);
+        this.addKeyListener(this);
+        timer.start();//让时间动起来
     }
 
     //初始化
@@ -50,7 +62,62 @@ public class GamePanel extends JPanel {
             Data.down.paintIcon(this,g,snakeX[0],snakeY[0]);
         }
 
-        for (int i = 1;i < lenth;i++)
+        for (int i = 1;i < lenth;i++){
             Data.body.paintIcon(this,g,snakeX[i],snakeY[i]);
+        }
+        //游戏提示：是否开始
+        if(isStart==false){
+            //显示一个文字
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("微软雅黑",Font.BOLD,40));
+            g.drawString("按下空格开始游戏",300,300);
+        }
+    }
+
+
+    //接收键盘的输入
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //获取按下键盘是哪个键
+        int keyCode = e.getKeyCode();
+        if (keyCode==KeyEvent.VK_SPACE){//如果按下的是空格键
+            isStart = !isStart;
+            repaint();//刷新界面
+        }
+    }
+
+    //定时器 监听时间：帧       ||（接口实现方法）
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //如果游戏处于开始
+        if(isStart){
+            //右移
+            for (int i = lenth-1; i > 0; i--){
+                snakeX[i] = snakeX[i-1];
+                snakeY[i] = snakeY[i-1];
+            }
+            snakeX[0] = snakeX[0] + 25;//头部
+            //边界判断
+            if(snakeX[0]>850){
+                snakeX[0]=25;
+            }
+            repaint();//刷新页面
+        }
+        timer.start();//让时间动起来
+    }
+
+
+
+
+    //键盘按下弹起
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+    //释放某个键
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
