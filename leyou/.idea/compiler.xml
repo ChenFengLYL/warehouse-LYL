@@ -8,10 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="leyou-item-service" />
         <module name="leyou-gateway" />
+        <module name="leyou-common" />
         <module name="leyou-item-interface" />
         <module name="leyou-registry" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="leyou-common" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

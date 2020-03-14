@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   application:
-    name: leyou-service
+    name: item-service
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/leyou?useUnicode=true&characterEncoding=utf-8
@@ -15,5 +15,8 @@ eureka:
   instance:
     lease-renewal-interval-in-seconds: 5 #心跳时间
     lease-expiration-duration-in-seconds: 15 #过期时间
+ribbon:
+  eureka:
+    enabled: true
 mybatis:
   type-aliases-package: com.leyou.item.pojo
