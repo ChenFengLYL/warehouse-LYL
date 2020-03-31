@@ -41,7 +41,7 @@ layui.define(["element","jquery"],function(exports){
                         ulHtml += '<i class="layui-icon" data-icon="'+data[i].icon+'">'+data[i].icon+'</i>';
                     }
                 }
-                ulHtml += '<cite>'+data[i].name+'</cite>';
+                ulHtml += '<cite>'+data[i].title+'</cite>';
                 ulHtml += '<span class="layui-nav-more"></span>';
                 ulHtml += '</a>';
                 ulHtml += '<dl class="layui-nav-child">';
@@ -58,7 +58,7 @@ layui.define(["element","jquery"],function(exports){
                             ulHtml += '<i class="layui-icon" data-icon="'+data[i].children[j].icon+'">'+data[i].children[j].icon+'</i>';
                         }
                     }
-                    ulHtml += '<cite>'+data[i].children[j].name+'</cite></a></dd>';
+                    ulHtml += '<cite>'+data[i].children[j].title+'</cite></a></dd>';
                 }
                 ulHtml += "</dl>";
             }else{
