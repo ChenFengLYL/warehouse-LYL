@@ -15,4 +15,22 @@ public class SystemController {
     public String index(){
         return "system/index/index";
     }
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping("toDeskManager")
+    public String toDeskManager(){
+        return "system/index/deskManager";
+    }
+
+    /**
+     * 跳转到日志管理
+     * @return
+     */
+    @RequestMapping("toLoginfoManager")
+    public String toLoginfoManager(){
+        return "system/loginfo/loginfoManager";
+    }
 }

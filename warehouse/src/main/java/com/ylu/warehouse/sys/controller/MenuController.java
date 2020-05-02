@@ -20,7 +20,7 @@ public class MenuController {
     @Autowired
     private PermissionService permissionService;
     @RequestMapping("loadMenuManagerLeftTreeJson")
-    public DateGridView loadMenuManagerLeftTreeJson(PermissionVo permissionVo){
+    public DataGridView loadMenuManagerLeftTreeJson(PermissionVo permissionVo){
         //查询所有菜单
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
         //设置只能查询菜单
@@ -48,6 +48,6 @@ public class MenuController {
         }
         //构造层级关系
         List<TreeNode> list2 = TreeNodeBuilder.build(treeNodes,1);
-        return new DateGridView(list2);
+        return new DataGridView(list2);
     }
 }

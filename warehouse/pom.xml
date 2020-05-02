@@ -21,6 +21,7 @@
         <shiro.version>1.4.0</shiro.version>
         <log4j.version>1.2.17</log4j.version>
         <hutool.version>4.6.8</hutool.version>
+        <lang3.version>3.9</lang3.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <fastjson.version>1.2.62</fastjson.version>
     </properties>
@@ -146,6 +147,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+            <version>${lang3.version}</version>
         </dependency>
         <!-- pinyin4j -->
         <dependency>
